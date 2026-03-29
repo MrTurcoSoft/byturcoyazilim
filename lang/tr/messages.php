@@ -105,6 +105,12 @@ return [
     'timeline_6_plus_months' => '6+ Ay',
     'timeline_flexible' => 'Esnek',
     
+    // Meeting
+    'meeting_preferences' => 'Toplantı Tercihi',
+    'want_google_meet' => 'Google Meet ile online toplantı istiyorum',
+    'google_meet_description' => 'Tarih ve saat seçerseniz, onay sonrası Google Meet linki e-posta ile gönderilecektir.',
+    'meeting_info' => 'Toplantı talebiniz onaylandığında, Google Meet bağlantı linki e-posta adresinize gönderilecektir. Toplantıya tarayıcınızdan veya Google Meet uygulamasından katılabilirsiniz.',
+    
     // Services Page
     'our_expertise' => 'Uzmanlık Alanlarımız',
     'features' => 'Özellikler',

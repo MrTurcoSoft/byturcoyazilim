@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Quote;
 use App\Services\GoogleCalendarService;
+use App\Mail\MeetingInvitation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class QuoteController extends Controller
@@ -57,7 +59,7 @@ class QuoteController extends Controller
             $startTime = Carbon::parse($quote->preferred_date->format('Y-m-d') . ' ' . ($quote->preferred_time ?? '10:00'));
             $endTime = $startTime->copy()->addHour();
 
-            $eventId = $this->calendarService->createEvent(auth()->user(), [
+            $result = $this->calendarService->createEventWithMeet(auth()->user(), [
                 'summary' => 'Toplantı: ' . $quote->name . ' - ' . $quote->project_type,
                 'description' => "Müşteri: {$quote->name}\nE-posta: {$quote->email}\nTelefon: {$quote->phone}\nFirma: {$quote->company}\n\nProje: {$quote->project_description}",
                 'start' => $startTime->toIso8601String(),
@@ -65,9 +67,28 @@ class QuoteController extends Controller
                 'attendee_email' => $quote->email,
             ]);
 
-            $quote->update(['calendar_event_id' => $eventId]);
+            if ($result) {
+                $quote->update([
+                    'calendar_event_id' => $result['event_id'],
+                    'meet_link' => $result['meet_link'],
+                ]);
 
-            return back()->with('success', 'Toplantı Google Calendar\'a eklendi!');
+                // Send meeting invitation email to customer
+                try {
+                    Mail::to($quote->email)->send(new MeetingInvitation($quote, $startTime, $endTime));
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send meeting invitation: ' . $e->getMessage());
+                }
+
+                $message = 'Toplantı Google Calendar\'a eklendi!';
+                if ($result['meet_link']) {
+                    $message .= ' Google Meet linki müşteriye e-posta ile gönderildi.';
+                }
+                
+                return back()->with('success', $message);
+            }
+
+            return back()->with('error', 'Takvime eklenemedi.');
         } catch (\Exception $e) {
             return back()->with('error', 'Takvime eklenemedi: ' . $e->getMessage());
         }
@@ -81,7 +102,10 @@ class QuoteController extends Controller
 
         try {
             $this->calendarService->deleteEvent(auth()->user(), $quote->calendar_event_id);
-            $quote->update(['calendar_event_id' => null]);
+            $quote->update([
+                'calendar_event_id' => null,
+                'meet_link' => null,
+            ]);
 
             return back()->with('success', 'Toplantı takvimden kaldırıldı.');
         } catch (\Exception $e) {

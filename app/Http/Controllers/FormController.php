@@ -46,9 +46,12 @@ class FormController extends Controller
             'project_description' => 'required|string',
             'budget_range' => 'nullable|string|max:100',
             'timeline' => 'nullable|string|max:100',
-            'preferred_date' => 'nullable|date',
+            'preferred_date' => 'nullable|date|after:today',
             'preferred_time' => 'nullable|string',
+            'wants_meeting' => 'nullable|boolean',
         ]);
+
+        $validated['wants_meeting'] = $request->boolean('wants_meeting');
 
         $quote = Quote::create($validated);
 

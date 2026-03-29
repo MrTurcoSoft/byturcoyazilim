@@ -21,7 +21,15 @@
                     <div class="font-medium">{{ $quote->name }}</div>
                     <div class="text-sm text-gray-500">{{ $quote->email }}</div>
                 </td>
-                <td class="px-6 py-4">{{ $quote->project_type }}</td>
+                <td class="px-6 py-4">
+                    {{ $quote->project_type }}
+                    @if($quote->wants_meeting)
+                    <span class="ml-2 inline-flex items-center px-2 py-0.5 text-xs rounded bg-green-100 text-green-700">
+                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                        Meet
+                    </span>
+                    @endif
+                </td>
                 <td class="px-6 py-4">
                     @php
                     $statusColors = [

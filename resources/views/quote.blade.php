@@ -130,12 +130,40 @@
                 </div>
                 
                 <!-- Meeting Preferences -->
-                <h3 class="text-lg font-semibold mb-6 pt-6 border-t border-[var(--border)]">Toplantı Tercihi (Opsiyonel)</h3>
+                <h3 class="text-lg font-semibold mb-6 pt-6 border-t border-[var(--border)]">
+                    <span class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-[var(--primary)]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+                        </svg>
+                        {{ __('messages.meeting_preferences') }}
+                    </span>
+                </h3>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                <!-- Google Meet Option -->
+                <div class="mb-6 p-4 bg-[var(--secondary)] rounded-lg border border-[var(--border)]">
+                    <label class="flex items-start cursor-pointer">
+                        <input type="checkbox" name="wants_meeting" value="1" {{ old('wants_meeting') ? 'checked' : '' }}
+                               class="w-5 h-5 mt-0.5 text-[var(--primary)] rounded border-[var(--border)] focus:ring-[var(--primary)]"
+                               id="wants_meeting" data-testid="wants-meeting">
+                        <div class="ml-3">
+                            <span class="flex items-center font-medium">
+                                <svg class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm5.82 16.32l-1.5-1.5c-.293-.293-.768-.293-1.06 0l-1.5 1.5c-.293.293-.293.768 0 1.06l1.5 1.5c.147.147.34.22.53.22s.384-.073.53-.22l1.5-1.5c.293-.293.293-.768 0-1.06zM15 10.5c0-.828-.672-1.5-1.5-1.5h-3c-.828 0-1.5.672-1.5 1.5v3c0 .828.672 1.5 1.5 1.5h3c.828 0 1.5-.672 1.5-1.5v-3z"/>
+                                </svg>
+                                {{ __('messages.want_google_meet') }}
+                            </span>
+                            <p class="text-sm text-[var(--muted-foreground)] mt-1">
+                                {{ __('messages.google_meet_description') }}
+                            </p>
+                        </div>
+                    </label>
+                </div>
+                
+                <div id="meeting-fields" class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                     <div>
                         <label for="preferred_date" class="block text-sm font-medium mb-2">{{ __('messages.preferred_date') }}</label>
                         <input type="date" id="preferred_date" name="preferred_date" value="{{ old('preferred_date') }}"
+                               min="{{ date('Y-m-d', strtotime('+1 day')) }}"
                                class="w-full px-4 py-3 rounded-lg border border-[var(--border)] bg-[var(--background)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
                                data-testid="quote-date">
                     </div>
@@ -153,6 +181,17 @@
                             <option value="16:00" {{ old('preferred_time') == '16:00' ? 'selected' : '' }}>16:00</option>
                             <option value="17:00" {{ old('preferred_time') == '17:00' ? 'selected' : '' }}>17:00</option>
                         </select>
+                    </div>
+                </div>
+                
+                <div class="mb-8 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p class="text-sm text-blue-600 dark:text-blue-400">
+                            {{ __('messages.meeting_info') }}
+                        </p>
                     </div>
                 </div>
                 

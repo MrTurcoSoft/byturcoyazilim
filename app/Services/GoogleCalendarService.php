@@ -18,6 +18,7 @@ class GoogleCalendarService
         $this->client->setClientSecret(env('GOOGLE_CLIENT_SECRET'));
         $this->client->setRedirectUri(env('GOOGLE_REDIRECT_URI'));
         $this->client->addScope(Calendar::CALENDAR);
+        $this->client->addScope(Calendar::CALENDAR_EVENTS);
         $this->client->setAccessType('offline');
         $this->client->setPrompt('consent');
     }
@@ -68,7 +69,10 @@ class GoogleCalendarService
         return $this->client;
     }
 
-    public function createEvent(User $user, array $data): ?string
+    /**
+     * Create calendar event with Google Meet
+     */
+    public function createEventWithMeet(User $user, array $data): ?array
     {
         $client = $this->getClient($user);
         
@@ -78,6 +82,7 @@ class GoogleCalendarService
 
         $service = new Calendar($client);
 
+        // Create event with Google Meet conferencing
         $event = new Calendar\Event([
             'summary' => $data['summary'],
             'description' => $data['description'] ?? '',
@@ -92,6 +97,14 @@ class GoogleCalendarService
             'attendees' => isset($data['attendee_email']) ? [
                 ['email' => $data['attendee_email']]
             ] : [],
+            'conferenceData' => [
+                'createRequest' => [
+                    'requestId' => uniqid('meet-'),
+                    'conferenceSolutionKey' => [
+                        'type' => 'hangoutsMeet'
+                    ]
+                ]
+            ],
             'reminders' => [
                 'useDefault' => false,
                 'overrides' => [
@@ -101,9 +114,37 @@ class GoogleCalendarService
             ],
         ]);
 
-        $createdEvent = $service->events->insert('primary', $event);
+        // conferenceDataVersion=1 is required to create Meet link
+        $createdEvent = $service->events->insert('primary', $event, [
+            'conferenceDataVersion' => 1,
+            'sendUpdates' => 'all' // Send email invites to attendees
+        ]);
         
-        return $createdEvent->id;
+        // Extract Meet link
+        $meetLink = null;
+        if ($createdEvent->getConferenceData() && $createdEvent->getConferenceData()->getEntryPoints()) {
+            foreach ($createdEvent->getConferenceData()->getEntryPoints() as $entryPoint) {
+                if ($entryPoint->getEntryPointType() === 'video') {
+                    $meetLink = $entryPoint->getUri();
+                    break;
+                }
+            }
+        }
+        
+        return [
+            'event_id' => $createdEvent->id,
+            'meet_link' => $meetLink,
+            'html_link' => $createdEvent->htmlLink,
+        ];
+    }
+
+    /**
+     * Create calendar event without Meet (legacy method)
+     */
+    public function createEvent(User $user, array $data): ?string
+    {
+        $result = $this->createEventWithMeet($user, $data);
+        return $result ? $result['event_id'] : null;
     }
 
     public function deleteEvent(User $user, string $eventId): bool

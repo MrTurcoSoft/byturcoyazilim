@@ -105,6 +105,12 @@ return [
     'timeline_6_plus_months' => '6+ Months',
     'timeline_flexible' => 'Flexible',
     
+    // Meeting
+    'meeting_preferences' => 'Meeting Preferences',
+    'want_google_meet' => 'I want an online meeting via Google Meet',
+    'google_meet_description' => 'If you select a date and time, the Google Meet link will be sent via email after approval.',
+    'meeting_info' => 'When your meeting request is approved, the Google Meet link will be sent to your email address. You can join the meeting from your browser or the Google Meet app.',
+    
     // Services Page
     'our_expertise' => 'Our Expertise',
     'features' => 'Features',

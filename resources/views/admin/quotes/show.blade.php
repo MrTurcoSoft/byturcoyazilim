@@ -66,10 +66,33 @@
                     @endif
                     @if($quote->preferred_date)
                     <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                        <span class="text-gray-500">Tercih Edilen Toplantı:</span>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-gray-500">Tercih Edilen Toplantı:</span>
+                            @if($quote->wants_meeting)
+                            <span class="inline-flex items-center px-2 py-1 text-xs rounded bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                                Meet Toplantısı İsteniyor
+                            </span>
+                            @endif
+                        </div>
                         <p class="font-medium text-blue-700 dark:text-blue-300">
                             {{ $quote->preferred_date->format('d.m.Y') }} {{ $quote->preferred_time }}
                         </p>
+                        
+                        @if($quote->meet_link)
+                        <div class="mt-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                            <div class="flex items-center text-green-700 dark:text-green-400 mb-2">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                                <span class="font-medium">Google Meet Hazır</span>
+                            </div>
+                            <a href="{{ $quote->meet_link }}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:underline break-all">
+                                {{ $quote->meet_link }}
+                                <svg class="w-4 h-4 ml-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                            </a>
+                        </div>
+                        @endif
                         
                         @if($calendarConnected)
                             @if($quote->calendar_event_id)
@@ -79,6 +102,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                     Takvime eklendi
+                                    @if($quote->meet_link)
+                                    (Meet linki oluşturuldu)
+                                    @endif
                                 </span>
                                 <form action="{{ route('admin.quotes.calendar.remove', $quote) }}" method="POST" class="inline">
                                     @csrf
@@ -93,7 +119,7 @@
                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
                                     </svg>
-                                    Takvime Ekle
+                                    Takvime Ekle + Meet Oluştur
                                 </button>
                             </form>
                             @endif
