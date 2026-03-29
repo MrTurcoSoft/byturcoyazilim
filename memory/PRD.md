@@ -21,34 +21,32 @@ Laravel altyapısı kullanarak modern bir web sitesi ve yönetim paneli. Web tas
 - Tailwind CSS 4
 - Vite
 - SQLite
+- Google Calendar API
 
-## What's Been Implemented (29 Mart 2026)
+## What's Been Implemented
 
-### Frontend Pages
+### Phase 1 (29 Mart 2026) - MVP
 - ✅ Anasayfa (Hero, Services, Stats, References, Blog, CTA)
-- ✅ Hakkımızda
-- ✅ Hizmetler + Detay sayfaları
-- ✅ Referanslar + Detay sayfaları
-- ✅ Blog + Yazı detay sayfaları
-- ✅ İletişim (form dahil)
-- ✅ Teklif Al (randevu planlama dahil)
+- ✅ Hakkımızda, Hizmetler, Referanslar, Blog, İletişim, Teklif Al
+- ✅ Admin Panel (Dashboard, CRUD, Ayarlar)
+- ✅ Çoklu dil (TR/EN), Tema değiştirme
 
-### Admin Panel
-- ✅ Login sayfası
-- ✅ Dashboard (istatistikler)
-- ✅ Hizmetler CRUD
-- ✅ Referanslar CRUD
-- ✅ Blog CRUD
-- ✅ Mesajlar yönetimi
-- ✅ Teklif talepleri yönetimi
-- ✅ Site ayarları (tema, iletişim, sosyal medya)
-
-### Features
-- ✅ Çoklu dil desteği (TR/EN)
-- ✅ Tema değiştirme (koyu/açık)
-- ✅ Responsive tasarım
-- ✅ Modern UI (Outfit + Inter fontları)
-- ✅ Data test ID'ler
+### Phase 2 (29 Mart 2026) - Yeni Özellikler
+- ✅ SMTP E-posta Sistemi (Hostinger)
+  - Yeni iletişim mesajı bildirimi
+  - Yeni teklif talebi bildirimi
+- ✅ SEO Meta Tag Yönetimi
+  - Her sayfa için ayrı meta title, description, keywords
+  - Open Graph ve Twitter Card desteği
+  - Admin panelden yönetilebilir
+- ✅ Google Calendar Entegrasyonu
+  - OAuth2 ile bağlantı
+  - Teklif taleplerini takvime ekleme
+  - Takvimden kaldırma
+- ✅ Görsel Yükleme Sistemi
+  - Drag & drop yükleme
+  - URL kopyalama
+  - 5MB limit, resim formatları
 
 ## Database Models
 - User (admin)
@@ -57,26 +55,36 @@ Laravel altyapısı kullanarak modern bir web sitesi ve yönetim paneli. Web tas
 - Reference (referanslar/portföy)
 - BlogPost (blog yazıları)
 - Contact (iletişim mesajları)
-- Quote (teklif talepleri)
+- Quote (teklif talepleri + calendar_event_id)
+- SeoSetting (SEO ayarları)
+- GoogleToken (OAuth tokens)
+
+## Environment Variables
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.hostinger.com
+MAIL_PORT=465
+MAIL_USERNAME=noreply@nielsenchase.co.uk
+MAIL_ENCRYPTION=ssl
+ADMIN_EMAIL=noreply@nielsenchase.co.uk
+
+GOOGLE_CLIENT_ID=887819604443-...
+GOOGLE_CLIENT_SECRET=GOCSPX-...
+GOOGLE_REDIRECT_URI=.../api/oauth/calendar/callback
+```
 
 ## Backlog / Future Features
 
-### P0 (Critical)
-- Tümü tamamlandı
-
 ### P1 (High Priority)
-- [ ] Görsel yükleme sistemi (şu an URL ile)
-- [ ] E-posta bildirimleri (yeni mesaj/teklif)
 - [ ] Şifre sıfırlama
+- [ ] Çoklu admin desteği
 
 ### P2 (Medium Priority)
 - [ ] Blog yorum sistemi
-- [ ] SEO meta tag yönetimi
 - [ ] Sitemap oluşturucu
 - [ ] Google Analytics entegrasyonu
 
 ### P3 (Nice to Have)
 - [ ] Canlı chat widget
 - [ ] Newsletter sistemi
-- [ ] Çoklu admin desteği
 - [ ] İstatistik grafikleri
