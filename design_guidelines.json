@@ -1,0 +1,120 @@
+{
+  "theme": {
+    "archetype": "4 (Swiss & High-Contrast)",
+    "mode": "Dynamic Dual-Theme (Dark/Light toggled from Panel)",
+    "description": "A high-end, authority-driven aesthetic that leverages radical stark contrasts. In light mode, it feels like a crisp editorial magazine or premium corporate document. In dark mode, it transitions to a sleek, modern 'Godly' digital agency showcase with glowing accents and deep blacks.",
+    "colors": {
+      "light": {
+        "background": "#FFFFFF",
+        "foreground": "#09090B",
+        "primary": "#0055FF",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#F4F4F5",
+        "secondary_foreground": "#18181B",
+        "muted": "#F4F4F5",
+        "muted_foreground": "#71717A",
+        "accent": "#F4F4F5",
+        "accent_foreground": "#18181B",
+        "border": "#E4E4E7",
+        "input": "#E4E4E7",
+        "ring": "#0055FF"
+      },
+      "dark": {
+        "background": "#09090B",
+        "foreground": "#FAFAFA",
+        "primary": "#3B82F6",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#27272A",
+        "secondary_foreground": "#FAFAFA",
+        "muted": "#27272A",
+        "muted_foreground": "#A1A1AA",
+        "accent": "#27272A",
+        "accent_foreground": "#FAFAFA",
+        "border": "#27272A",
+        "input": "#27272A",
+        "ring": "#3B82F6"
+      }
+    },
+    "typography": {
+      "headings_font": "Outfit",
+      "body_font": "Inter",
+      "hierarchy": {
+        "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tighter font-semibold",
+        "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight font-medium",
+        "h3": "text-xl sm:text-2xl tracking-tight font-medium",
+        "h4": "text-lg sm:text-xl font-medium",
+        "body": "text-base leading-relaxed text-muted-foreground",
+        "small": "text-sm text-muted-foreground",
+        "overline": "text-xs font-bold uppercase tracking-[0.2em] text-primary"
+      }
+    },
+    "surfaces": {
+      "glassmorphism": "backdrop-blur-xl bg-background/70 border-b border-border shadow-sm",
+      "cards": "bg-card text-card-foreground border border-border shadow-sm rounded-none sm:rounded-lg",
+      "bento_grid": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6",
+      "spacing": "p-6 sm:p-8 md:p-12 lg:p-16"
+    }
+  },
+  "layout_strategies": {
+    "marketing_pages": {
+      "hero_section": "Generous spacing. Overlapping elements. Overlay opacity max bg-black/40. Left-aligned heavy typography with electric primary action button.",
+      "services_carousel": "Use bento grid mode. 'Tetris' style with col-span-2 or col-span-1 variations. Hover states MUST have a slight lift (-translate-y-1) and primary border color change.",
+      "portfolio_gallery": "Masonry or Bento grid structure. Images must not exceed 80vh on mobile. Hover reveals project details with glassmorphism overlay.",
+      "contact_form": "Shadcn highly customized. Inputs have 1px solid border, subtle focus ring. Two-column layout on desktop: Text/Address on left, Form on right."
+    },
+    "admin_dashboard": {
+      "layout": "Grid-based. Dense and compact spacing (p-4 or p-6). Cardless or 1px border flat cards.",
+      "navigation": "Sidebar or top nav with clear visual hierarchy. Use Phosphor Icons or Lucide.",
+      "tables_and_stats": "Use Shadcn Table and Chart components. Minimalist styling, pure function."
+    }
+  },
+  "components": {
+    "libraries_required": [
+      "framer-motion",
+      "lucide-react",
+      "@radix-ui/react-icons",
+      "recharts",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "interactive_rules": {
+      "hover_states": "Always explicitly define hover text colors. Example: hover:bg-primary/90 hover:text-primary-foreground",
+      "animations": "Use staggered entrance animations for lists/grids via framer-motion.",
+      "data_testid": "MANDATORY on all interactive elements (buttons, inputs, links)."
+    }
+  },
+  "media_assets": {
+    "hero_dark": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/5763de9c-24bc-4105-8c94-47243f911710/images/6131d222ba14da2c0761e63dbc2808a37377d26fe25f34b3b13d969061ddf8b4.png",
+      "description": "Abstract 3D digital architecture for Dark Theme Hero"
+    },
+    "hero_light": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/5763de9c-24bc-4105-8c94-47243f911710/images/a1df500aa352d9c54fb7022cbb2a2182f795d6b3d2a74518b98ffd5c931b3c1e.png",
+      "description": "Minimalist frosted glass abstraction for Light Theme Hero"
+    },
+    "services_tech": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/5763de9c-24bc-4105-8c94-47243f911710/images/a616b5fcab28bc51cb6a4daa07657d85e5ad5960d3794cd5b430502bda7f9c37.png",
+      "description": "Macro shot of modern laptop keyboard on concrete desk for Services section"
+    },
+    "office_about": {
+      "url": "https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Modern open-plan office for About Us or Agency Culture section"
+    },
+    "meeting_presentation": {
+      "url": "https://images.unsplash.com/photo-1769740333462-9a63bfa914bc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwzfHxidXNpbmVzcyUyMG1lZXRpbmclMjBwcmVzZW50YXRpb258ZW58MHx8fHwxNzc0NzgzMzI0fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Business meeting for Contact or Quote Request section"
+    },
+    "software_abstract": {
+      "url": "https://images.unsplash.com/photo-1753715613457-63127ec40824?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwyfHxzb2Z0d2FyZSUyMGNvZGUlMjBzY3JlZW4lMjBhYnN0cmFjdHxlbnwwfHx8fDE3NzQ3ODMzMjN8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract software code screen for Portfolio/Features"
+    }
+  },
+  "instructions_to_main_agent": [
+    "DO NOT use Inter or standard sans for headings. Apply 'Outfit' globally to headings via CSS variables.",
+    "Implement a robust Dark/Light mode toggle system in the Next/React layout using next-themes.",
+    "Ensure the Admin panel shares the theme but defaults to a denser, more functional grid (Control Room grid mode).",
+    "Hero sections MUST have max bg-black/40 overlay. Do not hide the premium generated hero images under thick layers.",
+    "Implement 'data-testid' on every button, link, and form input for testing.",
+    "Utilize framer-motion for subtle entrance reveals on the frontend (Services bento grid, Portfolio masonry)."
+  ]
+}
