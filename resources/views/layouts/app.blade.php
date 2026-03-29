@@ -4,8 +4,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', \App\Models\Setting::get('site_name', 'Dijital Ajans'))</title>
-    <meta name="description" content="@yield('description', \App\Models\Setting::get('site_description', 'Profesyonel web tasarım ve yazılım çözümleri'))">
+    
+    @php
+        $seo = \App\Models\SeoSetting::getForPage($seoPage ?? 'home');
+        $siteName = \App\Models\Setting::get('site_name', 'Dijital Ajans');
+    @endphp
+    
+    <title>@yield('title', $seo['title'] ?: $siteName)</title>
+    <meta name="description" content="@yield('description', $seo['description'] ?: \App\Models\Setting::get('site_description', 'Profesyonel web tasarım ve yazılım çözümleri'))">
+    @if($seo['keywords'])
+    <meta name="keywords" content="{{ $seo['keywords'] }}">
+    @endif
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="@yield('title', $seo['title'] ?: $siteName)">
+    <meta property="og:description" content="@yield('description', $seo['description'] ?: \App\Models\Setting::get('site_description', ''))">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($seo['og_image'])
+    <meta property="og:image" content="{{ $seo['og_image'] }}">
+    @endif
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', $seo['title'] ?: $siteName)">
+    <meta name="twitter:description" content="@yield('description', $seo['description'] ?: \App\Models\Setting::get('site_description', ''))">
+    @if($seo['og_image'])
+    <meta name="twitter:image" content="{{ $seo['og_image'] }}">
+    @endif
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

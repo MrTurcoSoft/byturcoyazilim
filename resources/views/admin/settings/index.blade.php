@@ -117,4 +117,103 @@
         </button>
     </div>
 </form>
+
+<!-- Google Calendar Integration -->
+<div class="max-w-3xl mt-8">
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+        <h3 class="text-lg font-semibold mb-4">Google Calendar Entegrasyonu</h3>
+        <p class="text-sm text-gray-500 mb-4">
+            Google Calendar'ı bağlayarak teklif taleplerindeki toplantı taleplerini otomatik olarak takviminize ekleyebilirsiniz.
+        </p>
+        
+        @php
+            $isConnected = \App\Models\GoogleToken::where('user_id', auth()->id())->exists();
+        @endphp
+        
+        @if($isConnected)
+        <div class="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span class="text-green-700 dark:text-green-400">Google Calendar bağlı</span>
+            </div>
+            <a href="{{ route('admin.calendar.disconnect') }}" class="text-sm text-red-600 hover:underline" data-testid="disconnect-calendar">
+                Bağlantıyı Kes
+            </a>
+        </div>
+        @else
+        <a href="{{ route('admin.calendar.connect') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" data-testid="connect-calendar">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+            </svg>
+            Google Calendar'a Bağlan
+        </a>
+        @endif
+    </div>
+</div>
+
+<!-- Image Upload -->
+<div class="max-w-3xl mt-8">
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+        <h3 class="text-lg font-semibold mb-4">Görsel Yükleme</h3>
+        
+        <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center" id="upload-area">
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-gray-500 mb-4">Görsel yüklemek için tıklayın veya sürükleyin</p>
+            <input type="file" id="file-input" class="hidden" accept="image/*" data-testid="file-input">
+            <button type="button" onclick="document.getElementById('file-input').click()" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-testid="upload-btn">
+                Dosya Seç
+            </button>
+        </div>
+        
+        <div id="upload-result" class="mt-4 hidden">
+            <p class="text-sm text-gray-500 mb-2">Yüklenen görsel URL'si:</p>
+            <div class="flex items-center gap-2">
+                <input type="text" id="uploaded-url" readonly class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700">
+                <button type="button" onclick="copyUrl()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" data-testid="copy-url">
+                    Kopyala
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('file-input').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('_token', '{{ csrf_token() }}');
+    
+    try {
+        const response = await fetch('{{ route("admin.upload") }}', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            document.getElementById('uploaded-url').value = data.url;
+            document.getElementById('upload-result').classList.remove('hidden');
+        } else {
+            alert('Yükleme başarısız: ' + (data.message || 'Bilinmeyen hata'));
+        }
+    } catch (error) {
+        alert('Yükleme sırasında bir hata oluştu');
+    }
+});
+
+function copyUrl() {
+    const input = document.getElementById('uploaded-url');
+    input.select();
+    document.execCommand('copy');
+    alert('URL kopyalandı!');
+}
+</script>
 @endsection

@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\GoogleCalendarController;
 
 // Public Routes
 Route::middleware([\App\Http\Middleware\SetLocale::class])->group(function () {
@@ -61,6 +64,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/quotes', [QuoteController::class, 'index'])->name('quotes.index');
     Route::get('/quotes/{quote}', [QuoteController::class, 'show'])->name('quotes.show');
     Route::patch('/quotes/{quote}', [QuoteController::class, 'update'])->name('quotes.update');
+    Route::post('/quotes/{quote}/calendar', [QuoteController::class, 'addToCalendar'])->name('quotes.calendar.add');
+    Route::delete('/quotes/{quote}/calendar', [QuoteController::class, 'removeFromCalendar'])->name('quotes.calendar.remove');
     Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('quotes.destroy');
     
     // Settings
@@ -68,4 +73,22 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     Route::get('/settings/theme', [SettingController::class, 'theme'])->name('settings.theme');
     Route::post('/settings/theme', [SettingController::class, 'updateTheme'])->name('settings.theme.update');
+    
+    // SEO
+    Route::get('/seo', [SeoController::class, 'index'])->name('seo.index');
+    Route::get('/seo/{page}', [SeoController::class, 'edit'])->name('seo.edit');
+    Route::post('/seo/{page}', [SeoController::class, 'update'])->name('seo.update');
+    
+    // Upload
+    Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
+    Route::delete('/upload', [UploadController::class, 'delete'])->name('upload.delete');
+    Route::get('/uploads', [UploadController::class, 'list'])->name('uploads.list');
+    
+    // Google Calendar
+    Route::get('/calendar/connect', [GoogleCalendarController::class, 'connect'])->name('calendar.connect');
+    Route::get('/calendar/disconnect', [GoogleCalendarController::class, 'disconnect'])->name('calendar.disconnect');
+    Route::get('/calendar/status', [GoogleCalendarController::class, 'status'])->name('calendar.status');
 });
+
+// Google Calendar OAuth Callback (outside admin middleware for OAuth flow)
+Route::get('/api/oauth/calendar/callback', [GoogleCalendarController::class, 'callback'])->middleware('auth')->name('calendar.callback');

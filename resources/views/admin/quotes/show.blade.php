@@ -65,9 +65,43 @@
                     </div>
                     @endif
                     @if($quote->preferred_date)
-                    <div>
-                        <span class="text-gray-500">Tercih Edilen Tarih:</span>
-                        <p class="font-medium">{{ $quote->preferred_date->format('d.m.Y') }} {{ $quote->preferred_time }}</p>
+                    <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <span class="text-gray-500">Tercih Edilen Toplantı:</span>
+                        <p class="font-medium text-blue-700 dark:text-blue-300">
+                            {{ $quote->preferred_date->format('d.m.Y') }} {{ $quote->preferred_time }}
+                        </p>
+                        
+                        @if($calendarConnected)
+                            @if($quote->calendar_event_id)
+                            <div class="mt-3 flex items-center gap-2">
+                                <span class="text-xs text-green-600 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Takvime eklendi
+                                </span>
+                                <form action="{{ route('admin.quotes.calendar.remove', $quote) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs text-red-600 hover:underline">Kaldır</button>
+                                </form>
+                            </div>
+                            @else
+                            <form action="{{ route('admin.quotes.calendar.add', $quote) }}" method="POST" class="mt-3">
+                                @csrf
+                                <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700" data-testid="add-to-calendar">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                                    </svg>
+                                    Takvime Ekle
+                                </button>
+                            </form>
+                            @endif
+                        @else
+                        <p class="mt-2 text-xs text-gray-500">
+                            Takvime eklemek için <a href="{{ route('admin.settings.index') }}" class="text-blue-600 hover:underline">Google Calendar'ı bağlayın</a>
+                        </p>
+                        @endif
                     </div>
                     @endif
                 </div>

@@ -259,7 +259,7 @@ class LaravelAPITester:
         return success
 
     def test_admin_settings_page(self):
-        """Test admin settings page"""
+        """Test admin settings page with Google Calendar and Image Upload sections"""
         if not self.admin_logged_in:
             print("   ⚠️ Admin not logged in, skipping settings test")
             return False
@@ -269,7 +269,102 @@ class LaravelAPITester:
             content = response.text.lower()
             if 'setting' in content or 'ayar' in content:
                 print("   ✅ Admin settings page content looks good")
+                # Check for new features
+                if 'google calendar' in content or 'calendar' in content:
+                    print("   ✅ Google Calendar section found")
+                else:
+                    print("   ⚠️ Google Calendar section not found")
+                
+                if 'görsel yükleme' in content or 'image upload' in content or 'upload' in content:
+                    print("   ✅ Image Upload section found")
+                else:
+                    print("   ⚠️ Image Upload section not found")
                 return True
+        return success
+
+    def test_admin_seo_page(self):
+        """Test admin SEO page loads at /admin/seo"""
+        if not self.admin_logged_in:
+            print("   ⚠️ Admin not logged in, skipping SEO test")
+            return False
+            
+        success, response = self.run_test("Admin SEO Page", "GET", "/admin/seo", 200)
+        if success and response:
+            content = response.text.lower()
+            if 'seo' in content or 'meta' in content:
+                print("   ✅ Admin SEO page content looks good")
+                return True
+        return success
+
+    def test_admin_seo_edit_page(self):
+        """Test admin SEO edit page works for home page"""
+        if not self.admin_logged_in:
+            print("   ⚠️ Admin not logged in, skipping SEO edit test")
+            return False
+            
+        success, response = self.run_test("Admin SEO Edit Page", "GET", "/admin/seo/home", 200)
+        if success and response:
+            content = response.text.lower()
+            if 'meta_title' in content or 'meta_description' in content:
+                print("   ✅ Admin SEO edit page content looks good")
+                return True
+        return success
+
+    def test_google_calendar_status(self):
+        """Test Google Calendar status endpoint"""
+        if not self.admin_logged_in:
+            print("   ⚠️ Admin not logged in, skipping calendar status test")
+            return False
+            
+        success, response = self.run_test("Google Calendar Status", "GET", "/admin/calendar/status", 200)
+        if success and response:
+            try:
+                data = response.json()
+                if 'connected' in data:
+                    print(f"   ✅ Calendar status: {'Connected' if data['connected'] else 'Not Connected'}")
+                    return True
+            except:
+                print("   ⚠️ Calendar status response not JSON")
+        return success
+
+    def test_image_upload_endpoint(self):
+        """Test image upload endpoint (without actual file)"""
+        if not self.admin_logged_in:
+            print("   ⚠️ Admin not logged in, skipping upload test")
+            return False
+            
+        # Test without file to check endpoint exists and validation works
+        success, response = self.run_test("Image Upload Endpoint", "POST", "/admin/upload", 422)
+        if success:
+            print("   ✅ Upload endpoint exists and validates properly")
+            return True
+        return success
+
+    def test_homepage_meta_tags(self):
+        """Test homepage has proper meta tags"""
+        success, response = self.run_test("Homepage Meta Tags", "GET", "/", 200)
+        if success and response:
+            content = response.text
+            has_og_title = 'og:title' in content
+            has_og_description = 'og:description' in content
+            has_twitter_card = 'twitter:card' in content
+            
+            if has_og_title:
+                print("   ✅ og:title meta tag found")
+            else:
+                print("   ⚠️ og:title meta tag missing")
+                
+            if has_og_description:
+                print("   ✅ og:description meta tag found")
+            else:
+                print("   ⚠️ og:description meta tag missing")
+                
+            if has_twitter_card:
+                print("   ✅ twitter:card meta tag found")
+            else:
+                print("   ⚠️ twitter:card meta tag missing")
+                
+            return has_og_title and has_og_description and has_twitter_card
         return success
 
     def test_about_page(self):
@@ -314,6 +409,14 @@ def main():
     tester.test_admin_dashboard()
     tester.test_admin_services_page()
     tester.test_admin_settings_page()
+    
+    # Test new features
+    print("\n🆕 Testing New Features...")
+    tester.test_admin_seo_page()
+    tester.test_admin_seo_edit_page()
+    tester.test_google_calendar_status()
+    tester.test_image_upload_endpoint()
+    tester.test_homepage_meta_tags()
     
     # Print results
     print("\n" + "=" * 60)

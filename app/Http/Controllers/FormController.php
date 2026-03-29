@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\Quote;
+use App\Mail\NewContactNotification;
+use App\Mail\NewQuoteNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FormController extends Controller
 {
@@ -19,7 +22,15 @@ class FormController extends Controller
             'message' => 'required|string',
         ]);
 
-        Contact::create($validated);
+        $contact = Contact::create($validated);
+
+        // Send email notification
+        try {
+            $adminEmail = env('ADMIN_EMAIL', 'admin@admin.com');
+            Mail::to($adminEmail)->send(new NewContactNotification($contact));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send contact email: ' . $e->getMessage());
+        }
 
         return back()->with('success', __('messages.contact_success'));
     }
@@ -39,7 +50,15 @@ class FormController extends Controller
             'preferred_time' => 'nullable|string',
         ]);
 
-        Quote::create($validated);
+        $quote = Quote::create($validated);
+
+        // Send email notification
+        try {
+            $adminEmail = env('ADMIN_EMAIL', 'admin@admin.com');
+            Mail::to($adminEmail)->send(new NewQuoteNotification($quote));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send quote email: ' . $e->getMessage());
+        }
 
         return back()->with('success', __('messages.quote_success'));
     }
