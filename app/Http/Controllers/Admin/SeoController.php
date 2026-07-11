@@ -16,6 +16,8 @@ class SeoController extends Controller
         'blog' => 'Blog',
         'contact' => 'İletişim',
         'quote' => 'Teklif Al',
+        'privacy-policy' => 'Gizlilik Politikası',
+        'terms-serv' => 'Kullanım Şartları',
     ];
 
     public function index()

@@ -49,6 +49,8 @@ return [
     // Footer
     'quick_links' => 'Hızlı Erişim',
     'all_rights_reserved' => 'Tüm hakları saklıdır.',
+    'privacy_policy' => 'Gizlilik Politikası',
+    'terms_serv' => 'Kullanım Şartları',
     
     // About Page
     'our_story' => 'Hikayemiz',
@@ -128,4 +130,28 @@ return [
     'tags' => 'Etiketler',
     'share' => 'Paylaş',
     'related_posts' => 'İlgili Yazılar',
+
+    // Privacy Policy
+    'privacy_policy_title' => 'Gizlilik Politikamız',
+    'privacy_policy_description' => 'Kişisel verilerinizin gizliliğini ve güvenliğini korumayı taahhüt ediyoruz.',
+    'privacy_information_title' => 'Toplanan Bilgiler',
+    'privacy_information_text' => 'Hizmetlerimizden yararlanırken ad, e-posta, telefon ve proje detayları gibi bilgileri yalnızca hizmet sunmak ve iletişim kurmak amacıyla toplarız.',
+    'privacy_usage_title' => 'Bilgilerin Kullanımı',
+    'privacy_usage_text' => 'Toplanan veriler; taleplerinize dönüş yapmak, teklif süreçlerini yönetmek ve hizmet kalitesini artırmak için kullanılır. Verileriniz izniniz olmadan üçüncü taraflarla pazarlama amacıyla paylaşılmaz.',
+    'privacy_security_title' => 'Veri Güvenliği',
+    'privacy_security_text' => 'Verilerinizi korumak için güncel teknik ve idari güvenlik önlemleri uygularız. Yetkisiz erişim, kayıp ve kötüye kullanım riskine karşı düzenli kontroller gerçekleştiririz.',
+    'privacy_contact_title' => 'İletişim ve Haklarınız',
+    'privacy_contact_text' => 'Kişisel verilerinizle ilgili erişim, düzeltme veya silme talepleriniz için bizimle iletişime geçebilirsiniz.',
+
+    // Terms of Service
+    'terms_serv_title' => 'Kullanım Şartları',
+    'terms_serv_description' => 'Web sitemizi ve hizmetlerimizi kullanmadan önce lütfen bu şartları inceleyin.',
+    'terms_scope_title' => 'Kapsam',
+    'terms_scope_text' => 'Bu şartlar, web sitemizi ziyaret eden ve hizmetlerimizden yararlanan tüm kullanıcılar için geçerlidir.',
+    'terms_service_title' => 'Hizmet Koşulları',
+    'terms_service_text' => 'Sunulan hizmetlerin kapsamı, süresi ve ücretlendirmesi proje bazlı olarak belirlenir ve karşılıklı onay ile yürürlüğe girer.',
+    'terms_user_title' => 'Kullanıcı Sorumlulukları',
+    'terms_user_text' => 'Kullanıcılar, sağladıkları bilgilerin doğruluğundan sorumludur. Yasalara aykırı veya üçüncü taraf haklarını ihlal eden kullanım kabul edilmez.',
+    'terms_update_title' => 'Güncellemeler',
+    'terms_update_text' => 'Gerekli durumlarda bu şartlarda güncelleme yapabiliriz. Güncel sürüm bu sayfada yayımlandığı andan itibaren geçerli olur.',
 ];

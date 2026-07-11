@@ -27,6 +27,8 @@ Route::middleware([\App\Http\Middleware\SetLocale::class])->group(function () {
     Route::get('/blog/{slug}', [HomeController::class, 'blogPost'])->name('blog.post');
     Route::get('/iletisim', [HomeController::class, 'contact'])->name('contact');
     Route::get('/teklif-al', [HomeController::class, 'quote'])->name('quote');
+    Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
+    Route::get('/terms-serv', [HomeController::class, 'termsServ'])->name('terms.serv');
     
     // Form submissions
     Route::post('/iletisim', [FormController::class, 'submitContact'])->name('contact.submit');
