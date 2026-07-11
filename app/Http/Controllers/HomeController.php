@@ -85,6 +85,16 @@ class HomeController extends Controller
         return view('quote', compact('services'));
     }
 
+    public function privacyPolicy()
+    {
+        return view('privacy-policy', ['seoPage' => 'privacy-policy']);
+    }
+
+    public function termsServ()
+    {
+        return view('terms-serv', ['seoPage' => 'terms-serv']);
+    }
+
     public function setLocale($locale)
     {
         if (in_array($locale, ['tr', 'en'])) {

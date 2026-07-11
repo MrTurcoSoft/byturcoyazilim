@@ -211,6 +211,8 @@
                         <li><a href="{{ route('references') }}" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)]">{{ __('messages.references') }}</a></li>
                         <li><a href="{{ route('blog') }}" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)]">{{ __('messages.blog') }}</a></li>
                         <li><a href="{{ route('about') }}" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)]">{{ __('messages.about') }}</a></li>
+                        <li><a href="{{ route('privacy.policy') }}" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)]">{{ __('messages.privacy_policy') }}</a></li>
+                        <li><a href="{{ route('terms.serv') }}" class="text-sm text-[var(--muted-foreground)] hover:text-[var(--primary)]">{{ __('messages.terms_serv') }}</a></li>
                     </ul>
                 </div>
 

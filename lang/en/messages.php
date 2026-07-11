@@ -49,6 +49,8 @@ return [
     // Footer
     'quick_links' => 'Quick Links',
     'all_rights_reserved' => 'All rights reserved.',
+    'privacy_policy' => 'Privacy Policy',
+    'terms_serv' => 'Terms of Service',
     
     // About Page
     'our_story' => 'Our Story',
@@ -128,4 +130,28 @@ return [
     'tags' => 'Tags',
     'share' => 'Share',
     'related_posts' => 'Related Posts',
+
+    // Privacy Policy
+    'privacy_policy_title' => 'Our Privacy Policy',
+    'privacy_policy_description' => 'We are committed to protecting the privacy and security of your personal data.',
+    'privacy_information_title' => 'Information We Collect',
+    'privacy_information_text' => 'When you use our services, we collect information such as name, email, phone, and project details only to deliver services and communicate with you.',
+    'privacy_usage_title' => 'How We Use Information',
+    'privacy_usage_text' => 'Collected data is used to respond to your requests, manage quote processes, and improve service quality. Your data is not shared with third parties for marketing without your consent.',
+    'privacy_security_title' => 'Data Security',
+    'privacy_security_text' => 'We apply up-to-date technical and administrative safeguards to protect your data. We perform regular checks against unauthorized access, loss, and misuse.',
+    'privacy_contact_title' => 'Contact and Your Rights',
+    'privacy_contact_text' => 'You can contact us to request access, correction, or deletion of your personal data.',
+
+    // Terms of Service
+    'terms_serv_title' => 'Terms of Service',
+    'terms_serv_description' => 'Please review these terms before using our website and services.',
+    'terms_scope_title' => 'Scope',
+    'terms_scope_text' => 'These terms apply to all users who visit our website and use our services.',
+    'terms_service_title' => 'Service Conditions',
+    'terms_service_text' => 'The scope, timeline, and pricing of provided services are defined per project and become valid upon mutual approval.',
+    'terms_user_title' => 'User Responsibilities',
+    'terms_user_text' => 'Users are responsible for the accuracy of the information they provide. Any use that violates laws or third-party rights is not accepted.',
+    'terms_update_title' => 'Updates',
+    'terms_update_text' => 'We may update these terms when necessary. The latest version becomes effective once published on this page.',
 ];
